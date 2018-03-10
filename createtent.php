@@ -10,35 +10,32 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once 'database.php';
 
 // instantiate product object
-include_once 'artistssongs.php';
+include_once 'tents.php';
 
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
 
 // initialize object
-$artistssongs = new ArtistsSongs($db);
+$tent = new Tent($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set product property values
-$artistssongs->artist = htmlspecialchars(strip_tags($data->artist));
-$artistssongs->song = htmlspecialchars(strip_tags($data->song));
+// set tent property values
+$tent->person = htmlspecialchars(strip_tags($data->person));
 
 // create the product
-if (!empty($artistssongs->artist) || !empty($artistssongs->song)){
-  if($artistssongs->create()){
-      echo '{';
-          echo '"message": "ArtistsSongs was created."';
-      echo '}';
-  }
+if($tent->create()){
+    echo '{';
+        echo '"message": "Tent was created."';
+    echo '}';
+}
 
-  // if unable to create the product, tell the user
-  else{
-      echo '{ ';
-          echo '"message": "Unable to create artistssongs."';
-      echo '}';
-  }
+// if unable to create the product, tell the user
+else{
+    echo '{ ';
+        echo '"message": "Unable to create tent."';
+    echo '}';
 }
 ?>

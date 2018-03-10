@@ -23,11 +23,11 @@ $artistssongs = new ArtistsSongs($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$artistssongs->artist = htmlspecialchars(strip_tags($data->artist));
-$artistssongs->song = htmlspecialchars(strip_tags($data->song));
-
-// create the product
-if (!empty($artistssongs->artist) || !empty($artistssongs->song)){
+for ($i=0; $i< count($data); $i++)
+{
+  $artistssongs->artist = htmlspecialchars(strip_tags($data->artist));
+  $artistssongs->song = htmlspecialchars(strip_tags($data->song));
+  // create the product
   if($artistssongs->create()){
       echo '{';
           echo '"message": "ArtistsSongs was created."';
